@@ -1,0 +1,15 @@
+.conteiner {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  text-align: center;
+  font-size: 60px;
+}
+
+.secondTitle {
+  font-size: 30px;
+  text-align: center;
+}
