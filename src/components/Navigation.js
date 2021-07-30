@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { getIsAuthenticated } from '../redux/auth';
 
@@ -15,26 +15,30 @@ const styles = {
   },
 };
 
-const Navigation = ({ isAuthenticated }) => (
-  <nav>
-    <NavLink to="/" exact style={styles.link} activeStyle={styles.activeLink}>
-      Home page
-    </NavLink>
-    {isAuthenticated && (
-      <NavLink
-        to="/contacts"
-        exact
-        style={styles.link}
-        activeStyle={styles.activeLink}
-      >
-        Phonebook
+// const mapStateToProps = state => ({
+//   isAuthenticated: getIsAuthenticated(state),
+// });
+
+// export default connect(mapStateToProps)(Navigation);
+
+export default function Navigation() {
+  const isAuthenticated = useSelector(getIsAuthenticated);
+
+  return (
+    <nav>
+      <NavLink to="/" exact style={styles.link} activeStyle={styles.activeLink}>
+        Home page
       </NavLink>
-    )}
-  </nav>
-);
-
-const mapStateToProps = state => ({
-  isAuthenticated: getIsAuthenticated(state),
-});
-
-export default connect(mapStateToProps)(Navigation);
+      {isAuthenticated && (
+        <NavLink
+          to="/contacts"
+          exact
+          style={styles.link}
+          activeStyle={styles.activeLink}
+        >
+          Phonebook
+        </NavLink>
+      )}
+    </nav>
+  );
+}

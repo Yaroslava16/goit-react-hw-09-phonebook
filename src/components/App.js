@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Switch } from 'react-router-dom';
 import { getCurrentUser } from '../redux/auth';
 import Container from './Container/Conteiner';
@@ -6,7 +7,6 @@ import AppBar from './AppBar';
 
 import PrivatRoute from './PrivatRoute';
 import PublicRoute from './PublicRoute';
-import { useDispatch } from 'react-redux';
 
 const HomeView = lazy(() => import('../views/HomeView'));
 const RegisterView = lazy(() => import('../views/RegisterView'));
