@@ -1,6 +1,5 @@
-// import { useState } from 'react';
-import { Component } from 'react';
-import { connect } from 'react-redux';
+import { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { register } from '../redux/auth/auth-operations';
 
 const styles = {
@@ -14,131 +13,85 @@ const styles = {
   },
 };
 
-// export default function RegisterView() {
-//   const [name, setName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
+export default function RegisterView() {
+  const dispatch = useDispatch();
 
-//   return (
-//     <div>
-//       <h1>Registration page</h1>
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-//       <form autoComplete="off" onSubmit={handleSubmit} style={styles.form}>
-//         <label style={styles.label}>
-//           Name
-//           <input
-//             autoComplete="off"
-//             type="text"
-//             name="name"
-//             value={name}
-//             onChange={handleChange}
-//           />
-//         </label>
+  const handleChange = useCallback(e => {
+    const { name, value } = e.target;
 
-//         <label style={styles.label}>
-//           Email
-//           <input
-//             autoComplete="off"
-//             type="email"
-//             name="email"
-//             value={email}
-//             onChange={handleChange}
-//           />
-//         </label>
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
 
-//         <label style={styles.label}>
-//           Password
-//           <input
-//             autoComplete="off"
-//             type="password"
-//             name="password"
-//             value={password}
-//             onChange={handleChange}
-//           />
-//         </label>
+      case 'email':
+        setEmail(value);
+        break;
 
-//         <button type="submit">Register now</button>
-//       </form>
-//     </div>
-//   );
-// }
+      case 'password':
+        setPassword(value);
+        break;
 
-class RegisterView extends Component {
-  state = {
-    name: '',
-    email: '',
-    password: '',
-  };
+      default:
+        console.warn('Wrong data');
+    }
+  }, []);
 
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
-  };
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      dispatch(register({ name, email, password }));
+      setName('');
+      setEmail('');
+      setPassword('');
+    },
+    [dispatch, email, name, password],
+  );
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.onRegister(this.state);
-    this.setState({ name: '', email: '', password: '' });
-  };
+  return (
+    <div>
+      <h1>Registration page</h1>
 
-  render() {
-    const { name, email, password } = this.state;
-
-    return (
-      <>
-        <div>
-          <h1>Registration page</h1>
-
-          <form
+      <form autoComplete="off" onSubmit={handleSubmit} style={styles.form}>
+        <label style={styles.label}>
+          Name
+          <input
             autoComplete="off"
-            onSubmit={this.handleSubmit}
-            style={styles.form}
-          >
-            <label style={styles.label}>
-              Name
-              <input
-                autoComplete="off"
-                type="text"
-                name="name"
-                value={name}
-                // eslint-disable-next-line no-undef
-                onChange={this.handleChange}
-              />
-            </label>
+            type="text"
+            name="name"
+            value={name}
+            onChange={handleChange}
+          />
+        </label>
 
-            <label style={styles.label}>
-              Email
-              <input
-                autoComplete="off"
-                type="email"
-                name="email"
-                value={email}
-                // eslint-disable-next-line no-undef
-                onChange={this.handleChange}
-              />
-            </label>
+        <label style={styles.label}>
+          Email
+          <input
+            autoComplete="off"
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+        </label>
 
-            <label style={styles.label}>
-              Password
-              <input
-                autoComplete="off"
-                type="password"
-                name="password"
-                value={password}
-                // eslint-disable-next-line no-undef
-                onChange={this.handleChange}
-              />
-            </label>
+        <label style={styles.label}>
+          Password
+          <input
+            autoComplete="off"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+        </label>
 
-            <button type="submit">Register now</button>
-          </form>
-        </div>
-      </>
-    );
-  }
+        <button type="submit">Register now</button>
+      </form>
+    </div>
+  );
 }
-
-const mapDispatchToProps = {
-  onRegister: register,
-};
-
-export default connect(null, mapDispatchToProps)(RegisterView);
