@@ -1,36 +1,39 @@
-import React from 'react';
 // import PropTypes from 'prop-types';
+import { useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchContacts,
+  getVisibleContacts,
+  deleteContact,
+} from '../../redux/phonebook';
 import styles from '../Contacts/Contacts.module.css';
-import { Component } from 'react';
 
-class ContactsList extends Component {
-  componentDidMount() {
-    this.props.fetchContacts();
-  }
+export default function ContactsList() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
-  render() {
-    const { contacts, onDelete } = this.props;
+  const contacts = useSelector(getVisibleContacts);
+  const onDelete = useCallback(id => dispatch(deleteContact(id)), [dispatch]);
 
-    return (
-      <>
-        <ul className={styles.list}>
-          {contacts.map(({ name, id, number }) => (
-            <li className={styles.itemContact} key={id}>
-              <span>
-                {name}: {number}
-              </span>
-              <button className={styles.btn} onClick={() => onDelete(id)}>
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-      </>
-    );
-  }
+  return (
+    <>
+      <ul className={styles.list}>
+        {contacts.map(({ name, id, number }) => (
+          <li className={styles.itemContact} key={id}>
+            <span>
+              {name}: {number}
+            </span>
+            <button className={styles.btn} onClick={() => onDelete(id)}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }
-
-export default ContactsList;
 
 // Contacts.propTypes = {
 //   contacts: PropTypes.arrayOf(

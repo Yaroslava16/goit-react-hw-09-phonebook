@@ -1,4 +1,4 @@
-import ContactListContainer from '../components/Contacts/ContactList.container';
+import ContactsList from '../components/Contacts/ContactsList';
 import Form from '../components/Form/Form';
 import Filter from '../components/Filter/Filter';
 import styles from '../components/App.module.css';
@@ -10,7 +10,7 @@ const ContactsView = () => {
       <Form />
       <h2 className={styles.secondTitle}>Contacts</h2>
       <Filter />
-      <ContactListContainer />
+      <ContactsList />
     </div>
   );
 };
