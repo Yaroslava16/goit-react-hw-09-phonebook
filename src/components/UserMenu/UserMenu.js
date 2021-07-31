@@ -33,12 +33,3 @@ export default function UserMenu() {
     </div>
   );
 }
-
-// const mapStateToProps = state => ({
-//   name: getUsername(state),
-//   avatar: defaultAvatar,
-// });
-
-// const mapDispatchToProps = {
-//   onLogout: logOut,
-// };

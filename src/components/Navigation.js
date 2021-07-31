@@ -15,12 +15,6 @@ const styles = {
   },
 };
 
-// const mapStateToProps = state => ({
-//   isAuthenticated: getIsAuthenticated(state),
-// });
-
-// export default connect(mapStateToProps)(Navigation);
-
 export default function Navigation() {
   const isAuthenticated = useSelector(getIsAuthenticated);
 

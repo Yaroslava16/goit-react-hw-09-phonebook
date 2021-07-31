@@ -14,11 +14,3 @@ export default function PublicRoute({ redirectTo, children, ...routeProps }) {
     </Route>
   );
 }
-
-//  render={props =>
-//       isAuthenticated && routeProps.restricted ? (
-//         <Redirect to={redirectTo} />
-//       ) : (
-//         <Component {...props} />
-//       )
-//     }
